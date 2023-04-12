@@ -37,3 +37,19 @@ class Solution:
             if target - nums[i] in numbers:
                 return [i, numbers[target - nums[i]]]
             numbers[nums[i]] = i
+
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        n = {}
+        for i in range(0, len(nums)):
+            if target - nums[i] in n:
+                return [n[target - nums[i]], i]
+            if nums[i] not in n:
+                n[nums[i]] = i
+
+
+
+s = Solution()
+print(s.twoSum([2,7,11,15], 9))

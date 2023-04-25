@@ -30,17 +30,13 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+# Time Limit Exceeding
 class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         res = 1
         layer1 = [root]
         layer2 = []
         while layer1 and not all(i is None for i in layer1):
-            # for i in layer1:
-            #     if i: print(i.val, end=' ')
-            #     else: print('None', end=' ')
-            # print('')
-            
             i, j = 0, len(layer1)-1
             while layer1[i] is None: i += 1
             while layer1[j] is None: j -= 1
@@ -54,20 +50,18 @@ class Solution:
         return res
 
 
-p1 = TreeNode(1)
-p2 = TreeNode(3)
-p3 = TreeNode(2)
-p4 = TreeNode(5)
-p5 = TreeNode(9)
-p6 = TreeNode(6)
-p7 = TreeNode(7)
+class Solution:
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        if root is None: return 0
+        layer = []
+        res = 0
+        layer.insert(0, (root, 0))
 
-p1.left = p2
-p1.right = p3
-p2.left = p4
-p4.left = p5
-p3.right = p6
-p6.left = p7
-
-s = Solution()
-print(s.widthOfBinaryTree(p1))
+        while layer:
+            res = max(res, layer[0][1] - layer[-1][1] + 1)
+            length = len(layer)
+            for i in range(length):
+                node, index = layer.pop()
+                if node.left: layer.insert(0, (node.left, index*2+1)) # we only record the index
+                if node.right: layer.insert(0, (node.right, index*2+2))
+        return res

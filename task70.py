@@ -11,23 +11,16 @@ Explanation: There are two ways to climb to the top.
 
 class Solution:
     def climbStairs(self, n: int) -> int:
-        steps = {}
-        steps[0] = 0
-        steps[1] = 1
-        steps[2] = 2
-        # def climb(i: int):
-        #     if i in steps: return steps[i]
-        #     climb(i-1)
-        #     climb(i-2)
-        #     steps[i] = steps[i-1] + steps[i-2]
-        # climb(n)
-        # return steps[n]
-        for i in range(3, n+1):
-            steps[i] = steps[i-1] + steps[i-2]
-        return steps[n]
+        if n <= 1: return 1
+        steps = [1, 2]
+        for i in range(2, n):
+            steps.append(sum(steps))
+            steps = steps[1:]
+        return steps[-1]
+
 
 s = Solution()
-print(s.climbStairs(3))
+print(s.climbStairs(2))
 
 
 

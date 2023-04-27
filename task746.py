@@ -13,17 +13,14 @@ The total cost is 15.
 from typing import List
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-
+     
         steps = {-1: 0, 0: 0}
-        def climb(i: int) -> int:
-            # print(i)
-            if i in steps: return steps[i]
-            steps[i] =  min(cost[i] + climb(i-1), cost[i-1] + climb(i-2))
-            return steps[i]
+        def climb(n):
+            if n in steps: return steps[n]
+            steps[n] = min(climb(n-1)+cost[n], climb(n-2)+cost[n-1])
+            return steps[n]
         climb(len(cost)-1)
-        # print(steps)
         return steps[len(cost)-1]
-        
-    
+
 s = Solution()
 print(s.minCostClimbingStairs([10, 15, 20]))

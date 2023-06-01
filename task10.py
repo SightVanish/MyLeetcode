@@ -1,26 +1,40 @@
-# Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+"""
+Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+The matching should cover the entire input string (not partial).
+Example 1:
+Input: s = "aa", p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+"""
 
-# '.' Matches any single character.
-# '*' Matches zero or more of the preceding element.
-# The matching should cover the entire input string (not partial).
 
-# Note:
-# s could be empty and contains only lowercase letters a-z.
-# p could be empty and contains only lowercase letters a-z, and characters like . or *.
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        if len(s) == 0 or len(p) == 0: return False
+        dp = [[0 for _ in range(len(p)+1)] for _ in range(len(s)+1)]
+        dp[0][0] = 1
+        for i in range(len(p)):
+            if p[i] == '*' and dp[0][i-1] == 1:
+                # consider 'a*' as ''
+                dp[0][i+1] = 1
+        for i in range(0, len(s)):
+            for j in range(0, len(p)):
+                if s[i] == p[j] or p[j] == '.': dp[i+1][j+1] = dp[i][j]
+                if p[j] == '*':
+                    if s[i] != p[j-1] and p[j-1] != '.': dp[i+1][j+1] = dp[i+1][j-1] # consider 'a*' as ''
+                    # 'a*'='aa' or 'a*'='a' or 'a*'=''
+                    else: dp[i+1][j+1] = dp[i][j+1] or dp[i+1][j] or dp[i+1][j-1]
+        return dp[-1][-1]
 
-# Example 1:
-# Input:
-# s = "aa"
-# p = "a"
-# Output: false
-# Explanation: "a" does not match the entire string "aa".
+        
+s = Solution()
+print(s.isMatch('aa', 'a'))
 
-# Example 2:
-# Input:
-# s = "aa"
-# p = "a*"
-# Output: true
-# Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+exit()
+
+        
 
 
 

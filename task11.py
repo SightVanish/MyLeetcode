@@ -1,24 +1,34 @@
-# try dynamic programming--it takes too much time 
-# class Solution:
-#     def maxArea(self, height) -> int:
-#         # dynamic programing
-#         result = [[0 for _ in range(len(height))] for _ in range(len(height))]
-#         for i in range(0, len(height)):
-#             for j in range(i, len(height)):
-#                 if(i == j):
-#                     result[i][j] = 0 # init
-#                 elif (j - i) == 1:
-#                     result[i][j] = min(height[i], height[j]) # init
-#                 else:
-#                     continue
-#         for i in range(0, len(height)):
-#             for j in range(i, len(height)):
-#                 if i > 0:
-#                     result[i][j] = max(max(result[i-1][j],result[i][j-1]),(j-i)*min(height[i],height[j]))
-#                 else:
-#                     result[i][j] = max(result[i][j-1],(j-i)*min(height[i],height[j]))
-#         print(result)
-#         return result[len(height)-1][len(height)-1]
+"""
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+Return the maximum amount of water a container can store.
+Notice that you may not slant the container.
+Example 1:
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+"""
+
+
+"""
+2 pointers and always move the pointer pointing to lowerer value.
+assume h[i] <= [j]:
+if move j->j', area = (j'-i)*min(h[j'], h[i]) where (j'-i) < (j-i) and min(h[j'], h[i]) <= h[i] = min(h[j], h[i]).
+if move i->i', area = (j-i')*min(h[j], h[i']) where (j-i') < (j-i) BUT min(h[j], h[i']) may > h[i] = min(h[j], h[i])!
+"""
+from typing import List
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        i, j = 0, len(height) - 1
+        res = 0
+        while i < j:
+            res = max(res, (j - i) * min(height[j], height[i]))
+            if height[i] < height[j]: i += 1
+            else: j -= 1
+        return res
+
+
+
 
 # try to use 2 pointer
 class Solution:

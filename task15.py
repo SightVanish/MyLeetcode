@@ -15,4 +15,10 @@ Notice that the order of the output and the order of the triplets does not matte
 from typing import List
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        d = {}
+        for i in range(len(nums)):
+            d[nums[i]] = d[nums[i]] + 1 if nums[i] in d else 1
+        
+
+
 

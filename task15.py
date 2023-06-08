@@ -12,13 +12,29 @@ The distinct triplets are [-1,0,1] and [-1,-1,2].
 Notice that the order of the output and the order of the triplets does not matter.
 """
 
+
+
+# fix one number and what left is a twoSum question
 from typing import List
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        d = {}
+        nums.sort() # sort nums first
+        res = set()
+        # fixed i and search for j, k
         for i in range(len(nums)):
-            d[nums[i]] = d[nums[i]] + 1 if nums[i] in d else 1
-        
+            j, k = i + 1, len(nums) - 1
+            while j < k:
+                s = nums[i] + nums[j] + nums[k]
+                if s == 0:
+                    res.add((nums[i], nums[j], nums[k])) # since nums is sorted, so there is no need to consider repeating elements
+                    j += 1
+                    k -= 1
+                elif s > 0: k -= 1
+                elif s < 0: j += 1
+        return res
 
 
+
+s = Solution()
+print(s.threeSum([-1,0,1,2,-1,-4]))
 

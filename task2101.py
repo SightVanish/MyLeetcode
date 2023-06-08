@@ -13,17 +13,35 @@ But if we detonate the right bomb, both bombs will be detonated.
 So the maximum bombs that can be detonated is max(1, 2) = 2.
 """
 
-
-
-
-
 from typing import List
 class Solution:
     def maximumDetonation(self, bombs: List[List[int]]) -> int:
+        # build graph
+        graph = {}
+        for i in range(len(bombs)):
+            graph[i] = []
+            for j in range(len(bombs)):
+                if i == j: continue
+                if (bombs[i][0] - bombs[j][0])**2 + (bombs[i][1] - bombs[j][1])**2 <= bombs[i][2]**2:
+                    graph[i] += [j]
+        # run dfs on each nodes
+        def dfs(i):
+            d, visited = [i], []
+            while d:
+                i = d[0]
+                d = d[1:]
+                visited += [i]
+                for j in graph[i]:
+                    if j not in visited and j not in d:
+                        d.append(j)
+            return len(visited)
+        res = 0
+        for i in range(len(graph)):
+            res = max(res, dfs(i))
+        return res
 
 
-
-
-
+s = Solution()
+print(s.maximumDetonation([[1,2,3],[2,3,1],[3,4,2],[4,5,3],[5,6,4]]))
 
 

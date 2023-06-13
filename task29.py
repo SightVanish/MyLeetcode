@@ -11,3 +11,19 @@ Explanation: 10/3 = 3.33333.. which is truncated to 3.
 
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
+        res = 0
+        sign = (dividend < 0) == (divisor < 0)
+        dividend, divisor = abs(dividend), abs(divisor)
+        while dividend >= divisor:
+            multi_divisor, tmp = divisor, 1
+            while dividend >= multi_divisor:
+                dividend -= multi_divisor
+                res += tmp
+                multi_divisor <<= 1 # multi_divisor *= 2
+                tmp <<= 1
+        res = res if sign else -res
+        return max(min(res, 2**31-1), -2**31)
+    
+s = Solution()
+print(s.divide(-7, 3))
+

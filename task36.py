@@ -22,12 +22,46 @@ Output: true
 from typing import List
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
+        n = len(board)
+        # check all elements are valid 
+        if any(int(board[i][j]) not in range(1, 10) for i in range(n) for j in range(n) if board[i][j] != '.'): return False
+        # check each row
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+s = Solution()
+
+board = \
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+
+print(s.isValidSudoku(board))
+exit(0)
 
 
 

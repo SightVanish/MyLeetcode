@@ -10,18 +10,6 @@ Level 2 sum = 7 + 0 = 7.
 Level 3 sum = 7 + -8 = -1.
 So we return the level with the maximum sum which is level 2.
 """
-
-
-
-
-
-
-
-
-
-
-
-
 from typing import Optional
 # Definition for a binary tree node.
 class TreeNode:

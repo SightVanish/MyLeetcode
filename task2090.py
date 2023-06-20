@@ -19,7 +19,16 @@ Explanation:
 from typing import List
 class Solution:
     def getAverages(self, nums: List[int], k: int) -> List[int]:
-
-
-
-        
+        n = len(nums)
+        res = [-1 for _ in range(n)]
+        if n <= 2 * k: return res
+        s = sum(nums[: 2*k+1])
+        for i in range(k, n - k):
+            if i > k:
+                s -= nums[i-k-1]
+                s += nums[i+k]
+            res[i] = s // (2 * k + 1)
+        return res
+    
+s = Solution()
+print(s.getAverages([18334,25764,19780,92480,69842,73255,89893], 0))

@@ -23,28 +23,16 @@ from typing import List
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         n = len(board)
-        # check all elements are valid 
-        if any(int(board[i][j]) not in range(1, 10) for i in range(n) for j in range(n) if board[i][j] != '.'): return False
         # check each row
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        l = [[i for i in row if i != '.'] for row in board]
+        if any(len(set(i)) < len(i) for i in l): return False
+        # check each column
+        l = [[i for i in row if i != '.'] for row in list(zip(*board))]
+        if any(len(set(i)) < len(i) for i in l): return False
+        # check each block
+        l = [[board[3*i+m][3*j+n] for m in range(3) for n in range(3) if board[3*i+m][3*j+n] != '.'] for i in range(3) for j in range(3)]
+        if any(len(set(i)) < len(i) for i in l): return False
+        return True
 
 
 s = Solution()

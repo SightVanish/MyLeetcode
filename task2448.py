@@ -16,24 +16,37 @@ It can be shown that we cannot make the array equal with a smaller cost.
 """
 
 
-
-
-
-
-
-
 from typing import List
+# Time Complexity: O(nlgn); Space Complexity: O(n)
 class Solution:
     def minCost(self, nums: List[int], cost: List[int]) -> int:
-        res = float('inf')
-        for i in range(len(nums)):
-            tmp = 0
-            for j in range(len(nums)):
-                tmp += abs(nums[i] - nums[j]) * cost[j]
-            res = min(tmp, res)
-        return int(res)
+        n = len(nums)
+        nums, cost = zip(*sorted(zip(nums, cost)))
+        # left2right[i]: cost of increasing all nums[:i] to nums[i]
+        # right2left[i]: cost of decreasing all nums[i+1:] to nums[i]
+        left2right, right2left = [0] * n, [0] * n
+        left_cost, right_cost = cost[0], cost[-1]
+        for i in range(1, n):
+            left2right[i] = left2right[i-1] + (nums[i] - nums[i-1]) * left_cost
+            left_cost += cost[i]
+            right2left[n-i-1] = right2left[n-i] + (nums[n-i] - nums[n-i-1]) * right_cost
+            right_cost += cost[n-i-1]
+        res = [left2right[i] + right2left[i] for i in range(n)]
+        return min(res)
 
+s = Solution()
+print(s.minCost(nums = [1,3,5,2], cost = [2,3,1,14]))
             
-
-
-
+"""
+proof: the final equal value v could be in nums
+1. min(nums) <= v <= max(nums)
+2. sort nums
+3. assume nums[i] < v < nums[i+1]
+4. if move v to nums[i+1], 
+   change of cost = sum(cost[:i])*(nums[i+1]-v) - sum(cost[i+1:])*(nums[i+1]-v)
+                  = sum(cost[:i] - sum(cost[i+1:]))*(nums[i+1]-v)
+5. if move v to nums[i],
+   change of cost = sum(sum(cost[i+1:]) - sum(cost[:i]))*(nums[i+1]-v)
+6. if sum(cost[i+1:]) == sum(cost[:i]): move either way
+   else: we can always find a way to decrease total cost
+"""

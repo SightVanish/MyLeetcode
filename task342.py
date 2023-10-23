@@ -16,8 +16,10 @@ Output: true
 
 class Solution:
     def isPowerOfFour(self, n: int) -> bool:
-        if n <= 0: return False
         if n == 1: return True
-        return bin(n)[-2:] == '00'
+        binary = list(bin(n)[3:])
+        if set(binary) == {'0'} and len(binary) % 2 == 0: return True
+        return False
 
-        
+s = Solution()
+print(s.isPowerOfFour(-16))

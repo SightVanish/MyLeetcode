@@ -27,17 +27,16 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 from typing import List
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        i = 0
-        j = len(nums) - 1
-        while i < len(nums) and i <= j:
-            if nums[i] != val: i += 1
-            else:
+        i, j = 0, len(nums)-1
+        while i <= j:
+            if nums[i] == val:
                 nums[i], nums[j] = nums[j], nums[i]
                 j -= 1
-        nums = nums[:j+1]
-        print(nums)
-        return j+1
+            else: 
+                i += 1
+        return i
     
+
 s = Solution()
 print(s.removeElement([1],1 ))
 

@@ -5,18 +5,19 @@ Example 1:
 Input: s = "abc", t = "ahbgdc"
 Output: true
 """
-
-
-
-
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        
-
-
-
         for i in s:
             j = t.find(i)
             if j == -1: return False
             t = t[j+1:]
         return True
+
+# two pointers
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        i, j = 0, 0
+        while i < len(s) and j < len(t):
+            if s[i] == t[j]: i += 1
+            j += 1
+        return i == len(s)

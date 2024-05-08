@@ -26,7 +26,7 @@ class Solution:
             while j < k:
                 s = nums[i] + nums[j] + nums[k]
                 if s == 0:
-                    res.add((nums[i], nums[j], nums[k])) # since nums is sorted, so there is no need to consider repeating elements
+                    res.add((nums[i], nums[j], nums[k])) # must use set + tuple to remove duplicates and ensure time complexity
                     j += 1
                     k -= 1
                 elif s > 0: k -= 1

@@ -6,33 +6,12 @@ Example 1:
 Input: s = "egg", t = "add"
 Output: true
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        m, n = [], []
         if len(s) != len(t): return False
         for i in range(len(s)):
-            m.append(s.find(s[i]))
-            n.append(t.find(t[i]))
-        return m == n
+            if s.find(s[i]) != t.find(t[i]): return False
+        return True
             
 
 s = Solution()

@@ -31,6 +31,17 @@ class Solution:
         else: 
             return True
 
+class Solution:
+    def isValid(self, s: str) -> bool:
+        p = {']': '[', ')': '(', '}': '{'}
+        stack = []
+        for i in s:
+            if i in ['[', '(', '{']: stack.append(i)
+            else:
+                if len(stack) == 0 or p[i] != stack[-1]: return False
+                stack.pop()
+        return len(stack) == 0
+        
 s = Solution()
 print(s.isValid("()[]{}"))
 

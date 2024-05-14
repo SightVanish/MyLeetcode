@@ -13,18 +13,8 @@ Output: "/home"
 Explanation: Note that there is no trailing slash after the last directory name.
 """
 
-
-
-
-
-
-
-
-
-
 class Solution:
     def simplifyPath(self, path: str) -> str:
-
         path.replace('//', '')
         realpath = []
         path = path.split('/')
@@ -37,6 +27,16 @@ class Solution:
             else:
                 realpath.append(p)
         return '/' + '/'.join(realpath)
+
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        path = path.split('/')
+        stack = []
+        for i in path:
+            if i == '..': 
+                if len(stack) > 0: stack.pop()
+            elif i not in ['', '.']: stack.append(i)
+        return '/' + '/'.join(stack)
 
 s = Solution()
 print(s.simplifyPath('/home//foo/'))

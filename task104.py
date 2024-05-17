@@ -11,9 +11,15 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+# DFS
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-
-
-
-        
+        if root is None: return 0
+        layers, pre, next = 0, [root], []
+        while pre:
+            for i in pre: 
+                if i.left: next.append(i.left)
+                if i.right: next.append(i.right)
+            pre, next = next, []
+            layers += 1
+        return layers        

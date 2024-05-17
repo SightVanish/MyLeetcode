@@ -1,6 +1,3 @@
-from importlib.abc import SourceLoader
-
-
 class LRUNode:
     def __init__(self, key, value, pre=None, next=None):
         self.key = key
@@ -77,6 +74,28 @@ def printCache(lRUCache):
     print(lRUCache.cache)
     print(lRUCache.head.next.value, end = ' ')
     print(lRUCache.head.next.next.value)
+
+# use OrderedDict -- based on hashmap and linked list
+from collections import OrderedDict
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.values = OrderedDict()
+    
+    def get(self, key: int) -> int:
+        if key in self.values:
+            self.values.move_to_end(key, last=True)
+            return self.values[key]
+        else: return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.values: 
+            self.values.move_to_end(key, last=True)
+            self.values[key] = value
+        else:
+            if len(self.values.keys()) >= self.capacity: self.values.popitem(last=False)
+            self.values[key] = value
+                
 
 lRUCache = LRUCache(2)
 lRUCache.put(1, 1)

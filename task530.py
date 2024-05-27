@@ -14,17 +14,15 @@ class TreeNode:
 
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-        def preorder_traversal(node: TreeNode, curr, res):
-            if node.left: curr, res = preorder_traversal(node.left, curr, res)
+        def inOrderTraversal(node: TreeNode, curr, res):
+            # res: current minimum difference; curr: the value of node prior this node
+            if node.left: curr, res = inOrderTraversal(node.left, curr, res)
             res = min(res, abs(node.val - curr))
             curr = node.val
-            if node.right: curr, res = preorder_traversal(node.right, curr, res)
+            if node.right: curr, res = inOrderTraversal(node.right, curr, res)
             return curr, res
-        _, res = preorder_traversal(root, float('inf'), float('inf'))
+        _, res = inOrderTraversal(root, float('inf'), float('inf'))
         return int(res)
-
-
-
 
 
 p1=TreeNode(1)

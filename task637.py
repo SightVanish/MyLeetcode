@@ -1,10 +1,3 @@
-"""
-Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
-Example 1:
-Input: root = [3,9,20,null,null,15,7]
-Output: [[3],[9,20],[15,7]]
-"""
-
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -13,11 +6,11 @@ class TreeNode:
         self.right = right
 from typing import Optional, List
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if root is None: return []
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
         res, curr, next = [], [root], []
         while curr:
-            res.append([i.val for i in curr])
+            values = [i.val for i in curr]
+            res.append(sum(values)/len(values))
             for i in curr:
                 if i.left: next.append(i.left)
                 if i.right: next.append(i.right)

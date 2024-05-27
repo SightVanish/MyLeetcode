@@ -17,14 +17,15 @@ class TreeNode:
         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def valid(root: Optional[TreeNode], i, j) -> bool:
-            if root is None: return True
-            if not i < root.val < j: return False
-            if root.left is None and root.right is None: return True
-            if root.left and root.left.val >= root.val: return False
-            if root.right and root.right.val <= root.val: return False
-            return valid(root.left, i, root.val) and valid(root.right, root.val, j)
-        return valid(root, -float('inf'), float('inf'))
+        self.pre = None
+        def inOrder(root):
+            if root is None: True 
+            if root.left and not inOrder(root.left): return False
+            if self.pre is not None and self.pre.val >= root.val: return False
+            self.pre = root
+            if root.right and not inOrder(root.right): return False
+            return True
+        return inOrder(root)
         
 p1 = TreeNode(5)
 p2 = TreeNode(4)

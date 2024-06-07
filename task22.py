@@ -21,6 +21,17 @@ class Solution:
                 generate(l-1, r, s+'(')
         generate(n-1, n, '(')
         return res
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        output = []
+        def generate(s, l, r): # s: current string, l: number of left parenthesis, r: number of right parenthesis
+            if len(s) == 2 * n: output.append(s)
+            else:
+                if l < n: generate(s + '(', l + 1, r)
+                if r < l: generate(s + ')', l, r + 1)
+        generate('', 0, 0)
+        return output
     
 s = Solution()
 print(s.generateParenthesis(1))

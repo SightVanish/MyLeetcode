@@ -12,9 +12,8 @@ class Solution:
         def order(prefix, remainder):
             if len(remainder) == 0:
                 res.append(prefix)
-                return
-            for i in range(len(remainder)):
-                order(prefix + [remainder[i]], remainder[:i]+remainder[i+1:])
+            else:
+                for i in range(len(remainder)): order(prefix + [remainder[i]], remainder[:i]+remainder[i+1:])
         order([], nums)        
         return res
 

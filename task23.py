@@ -36,7 +36,34 @@ class Solution:
         return head.next
 
 # Another solution is to use divid and conquer, breaking merge-k problems to meger-two problems
-
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def merge2Lists(self, list1, list2):
+            head = ListNode(0)
+            p, p1, p2 = head, list1, list2
+            while p1 and p2:
+                if p1.val < p2.val:
+                    p.next = p1
+                    p1 = p1.next
+                else:
+                    p.next = p2
+                    p2 = p2.next
+                p = p.next
+            if p1: p.next = p1
+            elif p2: p.next = p2
+            return head.next
+    
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        n = len(lists)
+        if n == 0: return None
+        if n == 1: return lists[0]
+        if n == 2: return self.merge2Lists(lists[0], lists[1])
+        p1 = self.mergeKLists(lists[:n//2])
+        p2 = self.mergeKLists(lists[n//2:])
+        return self.merge2Lists(p1, p2)
 
 
 p1 = ListNode(1)

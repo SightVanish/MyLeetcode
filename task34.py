@@ -7,7 +7,7 @@ Input: nums = [5,7,7,8,8,10], target = 8
 Output: [3,4]
 """
 from typing import List
-# the high level idea is to find target first, then expand searching based on founded target
+# the high level idea is to find target first, then expand searching based on founded target->worst case is O(n)
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         left, right, mid = 0, len(nums) - 1, 0
@@ -23,21 +23,21 @@ class Solution:
         return [-1, -1]
     
 
+# find the first element of target: O(logn)
 class Solution:
-    def findTarget(self, nums, target):
-        start, end = 0, len(nums) - 1
-        while start <= end:
-            mid = (start + end) // 2
-            if nums[mid] >= target:
-                end = mid - 1
-            else:
-                start = mid + 1
-        return start # start makes sure it always be the first element == target
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        if target not in nums: return [-1, -1] # handle corner cases
-        start = self.findTarget(nums, target)
-        end = self.findTarget(nums, target+1) # find the first element bigger than target
-        return [start, end-1]
+        def binarySearch(i, j, target):
+            find = False
+            while i <= j:
+                mid = (i + j) // 2
+                if nums[mid] == target: find = True
+                if nums[mid] >= target: j = mid - 1
+                else: i = mid + 1
+            return find, i # if find target, i is the smallest index of target; if not, i is the index of the first element > target
+        find_start, start = binarySearch(0, len(nums) - 1, target)
+        _, end = binarySearch(0, len(nums) - 1, target + 1)
+        if not find_start: return [-1, -1]
+        else: return [start, end - 1]
 
 s = Solution()
 

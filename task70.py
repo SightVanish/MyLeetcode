@@ -1,26 +1,19 @@
-"""
-You are climbing a staircase. It takes n steps to reach the top.
-Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-Example 1:
-Input: n = 2
-Output: 2
-Explanation: There are two ways to climb to the top.
-1. 1 step + 1 step
-2. 2 steps
-"""
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        dp = [-1 for _ in range(n)]
+        def climb(n):
+            if n <= 2: dp[n] = n + 1
+            elif dp[n] == -1: dp[n] = climb(n - 1) + climb(n - 2)
+            return dp[n]
+        climb(n-1)
+        return dp[-1]
 
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n <= 1: return 1
-        steps = [1, 2]
-        for i in range(2, n):
-            steps.append(sum(steps))
-            steps = steps[1:]
-        return steps[-1]
-
+        if n <= 2: return n
+        dp = [1, 2]
+        for i in range(2, n): dp.append(dp[i - 1] + dp[i - 2])
+        return dp[-1]
 
 s = Solution()
 print(s.climbStairs(2))
-
-
-

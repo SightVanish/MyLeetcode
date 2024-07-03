@@ -12,17 +12,14 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
 from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        res = 0
         i, j = 0, 0
+        profits = 0
         while j < len(prices):
-            if prices[i] > prices[j]: # the key is that we always make the prices[i] minimum
-                i = j
-            else:
-                profit = prices[j] - prices[i]
-                if profit > res:
-                    res = profit
+            if prices[j] <= prices[i]: i = j
+            else: profits = max(profits, prices[j] - prices[i])
             j += 1
-        return res
+        return profits
+        
 
 s = Solution()
 print(s.maxProfit([7,6,5,4,3,2,1]))

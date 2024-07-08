@@ -17,7 +17,6 @@ class Solution:
                 l.remove(i)
             else:
                 l.append(i)
-        if l:
-            res += 1
+        if l: res += 1
         return res
 

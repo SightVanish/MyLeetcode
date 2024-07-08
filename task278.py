@@ -21,13 +21,18 @@ class Solution:
     def firstBadVersion(self, n: int) -> int:
         if n <= 0: return 0
         if isBadVersion(0): return 0
-
         i, j = 1, n
         while i <= j:
-            if isBadVersion((i+j)//2):
-                j = (i+j)//2 - 1
-            else:
-                i = (i+j)//2 + 1
+            if isBadVersion((i+j)//2): j = (i+j)//2 - 1
+            else: i = (i+j)//2 + 1
         return i
 
-
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        i, j = 1, n
+        while i <= j:
+            if not isBadVersion(j): return j + 1 # like (0,0,0,0),1,1,1,1
+            if isBadVersion(i): return i # like 0,0,0,0,(1,1,1,1)
+            mid = (i + j) // 2
+            if isBadVersion(mid): j = mid - 1
+            else: i = mid + 1

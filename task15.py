@@ -1,21 +1,8 @@
-"""
-Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
-Notice that the solution set must not contain duplicate triplets.
-Example 1:
-Input: nums = [-1,0,1,2,-1,-4]
-Output: [[-1,-1,2],[-1,0,1]]
-Explanation: 
-nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
-nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
-nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
-The distinct triplets are [-1,0,1] and [-1,-1,2].
-Notice that the order of the output and the order of the triplets does not matter.
-"""
-
-
+# 3 Sum
+from typing import List
 
 # fix one number and what left is a twoSum question
-from typing import List
+# O(n) space, O(n2) time
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort() # sort nums first
@@ -33,8 +20,39 @@ class Solution:
                 elif s < 0: j += 1
         return res
 
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res = set()
+        negatives, positives, zeros = [], [], []
+        for i in nums:
+            if i < 0: negatives.append(i)
+            elif i > 0: positives.append(i)
+            else: zeros.append(i)
+
+        # case: (0, 0, 0)
+        if len(zeros) >= 3: res.add((0, 0, 0))
+
+        # case: (num, 0, -num)
+        n, p = set(negatives), set(positives)
+        if zeros:
+            for i in n:
+                if -i in p: res.add((0, i, -i))
+        
+        # case (-x, -y, z) with 2 negative elements
+        for i in range(len(negatives)):
+            for j in range(i + 1, len(negatives)):
+                target = -negatives[i]-negatives[j]
+                if target in p: res.add(tuple(sorted([negatives[i], negatives[j], target]))) # sorted-> remove duplicated
+
+        # case (x, y, -z) with 2 positive elements
+        for i in range(len(positives)):
+            for j in range(i + 1, len(positives)):
+                target = -positives[i]-positives[j]
+                if target in n: res.add(tuple(sorted([target, positives[i], positives[j]])))
+        
+        return res
 
 
 s = Solution()
-print(s.threeSum([-1,0,1,2,-1,-4]))
-
+res = s.threeSum([2,1,3,4])
+print(res)

@@ -33,10 +33,8 @@ class Solution:
         while len(intervals) > start and newInterval[1] >= intervals[start][0]: 
             newInterval[1] = max(newInterval[1], intervals[start][1])
             del intervals[start]     
-        print(intervals, newInterval)   
         if start == 0: intervals = [newInterval] + intervals
         else: 
-            print(1)
             if intervals[start - 1][1] >= newInterval[0]: intervals[start - 1][1] = max(intervals[start - 1][1], newInterval[1])
             else: intervals = intervals[:start] + [newInterval] + intervals[start:]
         return intervals

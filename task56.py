@@ -13,6 +13,19 @@ class Solution:
                 end = max(end, j)
         res.append([start, end])
         return res
+    
+# modify in-place
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        if not intervals: return intervals
+        intervals.sort(key=lambda x:x[0])
+        i = 1
+        while i < len(intervals):
+            if intervals[i][0] <= intervals[i - 1][1]: 
+                intervals[i - 1][1] = max(intervals[i - 1][1], intervals[i][1])
+                del intervals[i]
+            else: i += 1
+        return intervals
 
 s = Solution()
 print(s.merge([[2,6],[1,3],[8,10],[15,18]]))

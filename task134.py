@@ -25,6 +25,18 @@ class Solution:
                 if j == len(gas)-1: return i
         return -1
 
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        total = 0
+        remaining = 0
+        start = 0
+        for i in range(len(gas)):
+            total += gas[i] - cost[i]
+            remaining += gas[i] - cost[i]
+            if remaining < 0:
+                start = i + 1 # start from next station
+                remaining = 0
+        return start if total >= 0 else -1
 
 s = Solution()
 print(s.canCompleteCircuit(gas = [1,2,3,4,5], cost = [3,4,5,1,2]))

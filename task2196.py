@@ -14,8 +14,7 @@ class Solution:
             parents[c] = p
             childrens[(p, l)] = c
         root = descriptions[0][0]
-        print(parents)
-        while parents[root] is not None: root = parents[root]
+        while root in parents and parents[root] is not None: root = parents[root]
         root = TreeNode(root)
         stack = [root]
         while stack:

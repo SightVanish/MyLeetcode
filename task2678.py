@@ -5,3 +5,4 @@ class Solution:
         for i in details:
             if int(i[-4:-2]) > 60: ans += 1
         return ans
+    
